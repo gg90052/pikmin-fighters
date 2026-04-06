@@ -1,1 +1,446 @@
+/* ===== Design Tokens ===== */
+:root {
+  --green-900: oklch(0.28 0.10 145);
+  --green-700: oklch(0.42 0.16 145);
+  --green-500: oklch(0.55 0.18 145);
+  --green-300: oklch(0.72 0.14 145);
+  --green-100: oklch(0.93 0.06 145);
+  --green-50:  oklch(0.97 0.03 145);
 
+  --warm-50:  oklch(0.98 0.02 90);
+  --warm-100: oklch(0.94 0.04 90);
+  --warm-200: oklch(0.88 0.06 90);
+
+  --text-primary:   oklch(0.22 0.06 145);
+  --text-secondary: oklch(0.48 0.07 145);
+  --text-muted:     oklch(0.65 0.05 145);
+
+  --card-bg: oklch(0.99 0.01 90);
+  --card-border: oklch(0.90 0.04 145);
+  --shadow-sm: 0 1px 3px oklch(0.28 0.08 145 / 0.10);
+  --shadow-md: 0 4px 16px oklch(0.28 0.08 145 / 0.12);
+  --shadow-lg: 0 8px 32px oklch(0.28 0.08 145 / 0.16);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+
+  /* Mushroom type colors */
+  --type-event:   oklch(0.62 0.22 50);
+  --type-white:   oklch(0.80 0.06 80);
+  --type-blue:    oklch(0.52 0.20 250);
+  --type-red:     oklch(0.55 0.22 20);
+  --type-iceblue: oklch(0.72 0.12 220);
+  --type-pink:    oklch(0.70 0.18 350);
+  --type-fire:    oklch(0.58 0.26 30);
+  --type-elec:    oklch(0.72 0.22 85);
+  --type-water:   oklch(0.58 0.18 230);
+  --type-poison:  oklch(0.52 0.22 300);
+  --type-crystal: oklch(0.68 0.14 200);
+}
+
+/* ===== Reset & Base ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+  background-color: var(--warm-50);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% -10%, oklch(0.72 0.14 145 / 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 110%, oklch(0.72 0.22 85 / 0.10) 0%, transparent 60%);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  line-height: 1.6;
+}
+
+/* ===== Layout ===== */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 4vw, 32px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(16px, 4vw, 32px);
+  width: 100%;
+}
+
+@media (min-width: 860px) {
+  .layout {
+    grid-template-columns: 380px 1fr;
+    align-items: start;
+  }
+}
+
+/* ===== Header ===== */
+.site-header {
+  background: var(--green-700);
+  background-image: linear-gradient(135deg, var(--green-900) 0%, var(--green-500) 100%);
+  color: white;
+  padding: clamp(14px, 3vw, 20px) clamp(16px, 4vw, 32px);
+  box-shadow: var(--shadow-md);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-icon {
+  font-size: clamp(28px, 5vw, 40px);
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px oklch(0 0 0 / 0.3));
+}
+
+.header-title h1 {
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-size: clamp(20px, 4vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.header-sub {
+  font-size: clamp(11px, 2vw, 13px);
+  color: oklch(0.88 0.08 145);
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+.header-badge {
+  background: oklch(0.72 0.22 85 / 0.25);
+  border: 1.5px solid oklch(0.72 0.22 85 / 0.5);
+  color: oklch(0.95 0.1 85);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.header-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: oklch(0.72 0.22 85);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ===== Form Card ===== */
+.form-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(20px, 4vw, 28px);
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 16px;
+}
+
+.form-card h2 {
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--green-700);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-card h2::before {
+  content: '＋';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--green-500);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 8px;
+  line-height: 1;
+}
+
+/* ===== Form Fields ===== */
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 7px;
+}
+
+.field input[type="text"],
+.field input:not([type]) {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--warm-50);
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+
+.field input:focus {
+  border-color: var(--green-500);
+  box-shadow: 0 0 0 3px oklch(0.55 0.18 145 / 0.15);
+  background: white;
+}
+
+.field input::placeholder { color: var(--text-muted); }
+
+/* ===== Button Groups ===== */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.btn-group button {
+  padding: 7px 13px;
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  background: var(--warm-100);
+  color: var(--text-secondary);
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+}
+
+.btn-group button:hover {
+  border-color: var(--green-300);
+  color: var(--green-700);
+  background: var(--green-50);
+  transform: translateY(-1px);
+}
+
+.btn-group button.active {
+  background: var(--green-500);
+  border-color: var(--green-500);
+  color: white;
+  box-shadow: 0 2px 8px oklch(0.55 0.18 145 / 0.35);
+}
+
+/* ===== Submit Button ===== */
+.submit-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 13px 24px;
+  background: var(--green-500);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.18s ease;
+  box-shadow: 0 3px 12px oklch(0.55 0.18 145 / 0.35);
+}
+
+.submit-btn:hover {
+  background: var(--green-700);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px oklch(0.42 0.16 145 / 0.40);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+/* ===== Error ===== */
+.error {
+  color: oklch(0.55 0.22 20);
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: oklch(0.55 0.22 20 / 0.08);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid oklch(0.55 0.22 20);
+}
+
+/* ===== List Section ===== */
+.list-section {
+  padding: 0;
+}
+
+.list-section h2 {
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--green-700);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.list-section h2::before {
+  content: '🍄';
+  font-size: 18px;
+}
+
+.mushroom-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  padding: 48px 24px;
+  background: var(--card-bg);
+  border: 1.5px dashed var(--card-border);
+  border-radius: var(--radius-lg);
+}
+
+/* ===== Mushroom Card ===== */
+.mushroom-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.mushroom-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--green-50);
+  border-bottom: 1.5px solid var(--card-border);
+  gap: 8px;
+}
+
+.mushroom-name {
+  font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--green-900);
+}
+
+.time-left {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--warm-100);
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  border: 1px solid var(--card-border);
+}
+
+.card-body {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.info-row .label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  min-width: 72px;
+  flex-shrink: 0;
+}
+
+.info-row .value {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.info-row .value.coord {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  background: var(--warm-100);
+  padding: 2px 7px;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  word-break: break-all;
+}
+
+/* ===== Footer ===== */
+.site-footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--card-border);
+  margin-top: auto;
+}
+
+/* ===== Animations ===== */
+@media (prefers-reduced-motion: no-preference) {
+  .mushroom-card {
+    animation: cardIn 0.25s ease-out both;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
